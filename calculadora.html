@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>calculadora</title>
+</head>
+
+<body>
+    <div id="contenedorOperacion">
+        <h3 id="numero1"></h3>
+        <h3 id="simbolo"></h3>
+        <h3 id="numero2"></h3>
+        <h3 id="igual-visual" style="display:none;">=</h3>
+        <h3 id="resultado"></h3>
+    </div><br>
+    <button class="numero" id="7">7</button>
+    <button class="numero" id="8">8</button>
+    <button class="numero" id="9">9</button>
+    <button class="simbolo" type="disabled" id="+">+</button><br>
+    <button class="numero" id="4">4</button>
+    <button class="numero" id="5">5</button>
+    <button class="numero" id="6">6</button>
+    <button class="simbolo" type="disabled" id="-">-</button><br>
+    <button class="numero" id="1">1</button>
+    <button class="numero" id="2">2</button>
+    <button class="numero" id="3">3</button>
+    <button class="simbolo" type="disabled" id="*">*</button><br>
+    <button id="c" type="disabled">c</button>
+    <button class="numero" id="0">0</button>
+    <button id="igual">=</button>
+    <button class="simbolo" type="disabled" id="/">/</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script>
+        $(function () {
+            let operacion1 = ""
+            let operacion2 = ""
+            let simbolo = ""
+            let operando= false
+            let resultado=0
+            $('.numero').click(function (event) {
+                if(operando){ 
+                    let numeros = ($(event.currentTarget).attr('id'))
+                    operacion2 = String(operacion2)  + String(numeros)
+                    $('#numero2').html(operacion2)
+                }else{
+                    let numeros = ($(event.currentTarget).attr('id'))
+                    operacion1 = String(operacion1)+ String(numeros)
+                    $('#numero1').html(operacion1)
+                }
+            })
+            $('.simbolo').click(function (event) {
+                if (operando) { return; }
+                operando = true
+                $('.simbolo').attr('disabled',false)
+                simbolo = ($(event.currentTarget).attr('id'))
+                $('#simbolo').append(simbolo)
+            })
+            $('#igual').click(function(){
+                if(simbolo === "+"){
+                    resultado= parseInt(operacion1)+parseInt(operacion2)
+                    
+                }else if (simbolo === "-"){
+                    resultado= parseInt(operacion1)-parseInt(operacion2)
+                }else if (simbolo === "*"){
+                    resultado= parseInt(operacion1)*parseInt(operacion2)
+                }else{
+                    resultado= parseInt(operacion1)/parseInt(operacion2)
+                }
+                $('#igual-visual').show()
+                $('#resultado').html(resultado)
+            })
+            $('#c').click(function(){
+                 operacion1 = ""
+                 operacion2 = ""
+                 simbolo = ""
+                 operando= false
+                 resultado=0
+                $('#contenedorOperacion').html('<h3 id="numero1"></h3>'+
+                    '<h3 id="simbolo"></h3>'+
+                    '<h3 id="numero2"></h3>'+
+                    '<h3 id="igual-visual" style="display:none;">=</h3>'+
+                    '<h3 id="resultado"></h3>')
+
+            })
+        })
+     
+
+    </script>
+</body>
+
+</html>
